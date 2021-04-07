@@ -1,0 +1,18 @@
+<div class="container-fluid" *ngIf="data">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">5-day forecast for {{cityName}}</h3>
+  
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor='let item of data'>
+          {{ item?.date | date:'EEEE, MMM d' }}
+          {{ item?.currentConditions | titlecase }}
+          - Min: {{ item?.minTemp | number : '1.0-0' }}
+          - Max: {{ item?.maxTemp | number : '1.0-0' }}
+          <app-weather-image [weather]="item?.currentConditions"></app-weather-image>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-success" tabindex="0" id="mainPageBtn" routerLink="/">&lt; Back to main page</button>
+  </div>

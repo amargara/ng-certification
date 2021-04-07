@@ -1,0 +1,21 @@
+<div *ngIf="data">
+    <div class="well flex card flex-row p-2 mb-3">
+        <div>
+          <h3>{{ data?.name }} ({{ zipCode }})</h3>
+          <h4>Current conditions: {{ data?.currentConditions | titlecase}}</h4>
+          <h4>Temperatures today:</h4>
+          <p>
+            Current {{ data?.currentTemp | number : '1.0-0'}}
+            - Max {{ data?.maxTemp | number : '1.0-0'}}
+            - Min {{ data?.minTemp | number : '1.0-0'}}
+          </p>
+          <p>
+            <a [routerLink]="['/forecast', zipCode]">Show 5-day forecast for {{ data?.name }}</a>
+          </p>
+        </div>
+        <div>
+          <span class="close" (click)="removeItem()">×</span>
+          <app-weather-image [weather]="data?.currentConditions"></app-weather-image>
+        </div>
+     </div>
+</div>
