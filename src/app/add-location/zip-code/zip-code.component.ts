@@ -32,7 +32,6 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm){
-    debugger;
     this.form = form;
     this.formSubmitted = true;
     if (form.valid){
@@ -49,7 +48,6 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     this.dataService.zipCodeError
     .pipe(takeUntil(this.destroy$))
     .subscribe((error:boolean) => {
-      debugger;
       this.error = error;
       if (this.error === false && this.form){
         this.form.resetForm();
