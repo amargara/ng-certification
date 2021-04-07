@@ -2,9 +2,9 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BlockRouteService } from 'src/app/core/guards/block-route.service';
 import { DataService } from 'src/app/core/data.service';
 import { Weather } from '../../../shared/weather-location.model';
+import { BlockRouteGuard } from 'src/app/core/guards/block-route.guard';
 
 @Component({
   selector: 'app-current-weather-location',
@@ -20,7 +20,7 @@ export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
   constructor(
     private readonly dataService: DataService,
     private readonly router: Router,
-    private readonly blockRouteService: BlockRouteService
+    private readonly blockRouteGuard: BlockRouteGuard
     ) { }
 
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
   }
 
   goToForecast(){
-    this.blockRouteService.allowingRoute(true);
+    this.blockRouteGuard.allowingRoute(true);
     this.router.navigate(["/forecast", this.zipCode]);
   }
 
