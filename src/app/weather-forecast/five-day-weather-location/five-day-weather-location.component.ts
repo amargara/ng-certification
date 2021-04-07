@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DataService } from '../shared/data.service';
-import { Weather } from '../shared/weather-location.model';
+import { DataService } from '../../core/data.service';
+import { Weather } from '../../shared/weather-location.model';
 
 @Component({
   selector: 'app-five-day-weather-location',

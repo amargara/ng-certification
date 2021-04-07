@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddLocationComponent } from './add-location/add-location.component';
-import { FiveDayWeatherLocationComponent } from './five-day-weather-location/five-day-weather-location.component';
-import { BlockRouteService } from './shared/block-route.service';
+import { AddLocationComponent } from './weather-forecast/add-location/add-location.component';
+import { FiveDayWeatherLocationComponent } from './weather-forecast/five-day-weather-location/five-day-weather-location.component';
+import { BlockRouteService } from './core/guards/block-route.service';
 
 const routes: Routes = [
   {

@@ -2,16 +2,16 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BlockRouteService } from 'src/app/shared/block-route.service';
-import { DataService } from 'src/app/shared/data.service';
-import { Weather } from '../../shared/weather-location.model';
+import { BlockRouteService } from 'src/app/core/guards/block-route.service';
+import { DataService } from 'src/app/core/data.service';
+import { Weather } from '../../../shared/weather-location.model';
 
 @Component({
-  selector: 'app-weather-location',
-  templateUrl: './weather-location.component.html',
+  selector: 'app-current-weather-location',
+  templateUrl: './current-weather-location.component.html',
   styles: ['.link{ cursor: pointer; }']
 })
-export class WeatherLocationComponent implements OnInit, OnDestroy {
+export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
 
   @Input() zipCode: string;
   data:Weather;

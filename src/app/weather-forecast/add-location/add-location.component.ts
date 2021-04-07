@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DataService } from '../shared/data.service';
+import { DataService } from '../../core/data.service';
 
 @Component({
   selector: 'app-add-location',
