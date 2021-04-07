@@ -5,12 +5,14 @@ import { FiveDayWeatherLocationComponent } from './five-day-weather-location/fiv
 import { CurrentWeatherLocationComponent } from './add-location/current-weather-location/current-weather-location.component';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { ZipCodeComponent } from './add-location/zip-code/zip-code.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   imports:      
   [ 
     BrowserModule, 
+    FormsModule
   ],
   declarations: 
   [ 
