@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NumbersOnlyDirective } from './shared/numbers-only.directive';
+import { WeatherForecastModule } from './weather-forecast/weather-forecast.module';
 
 @NgModule({
   imports:      
@@ -13,7 +14,8 @@ import { NumbersOnlyDirective } from './shared/numbers-only.directive';
     BrowserModule, 
     FormsModule, 
     AppRoutingModule, 
-    HttpClientModule 
+    HttpClientModule,
+    WeatherForecastModule
   ],
   declarations: 
   [ 
