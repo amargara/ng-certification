@@ -10,11 +10,13 @@ import { Weather } from '../shared/weather-location.model';
   templateUrl: './five-day-weather-location.component.html',
 })
 export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
+
   zipCode: string;
   cityName: string;
   data: Array<Weather>;
   noResults: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  loading: boolean = true;
 
   constructor(
     private route:ActivatedRoute,
@@ -25,6 +27,11 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
     this.getForecastByZipCode();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
   getForecastByZipCode(){
     this.dataService.callFiveDayForecast(this.zipCode)
     .pipe(takeUntil(this.destroy$))
@@ -32,14 +39,13 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
       (data) => {
         this.cityName = data[0].name;
         this.data = data;
+        this.loading = false;
       }, 
-      () => this.noResults = true
+      () => {
+        this.noResults = true;
+        this.loading = false;
+      }
     );
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
   }
 
 }

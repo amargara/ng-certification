@@ -29,6 +29,9 @@ export class DataService {
       this.zipCodesArray.push(value);
       localStorage.setItem('zipCodes',this.zipCodesArray.toString());
       this.zipArray.next(this.zipCodesArray);
+      return false;
+    }else{
+      return true;
     }
   }
 

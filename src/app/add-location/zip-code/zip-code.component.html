@@ -10,6 +10,7 @@
         name="addLocation"
         #addLocation="ngModel"
         ngModel 
+        [(ngModel)]="model.addLocation"
         (ngModelChange)="cleanErrorMessage()"
         required 
         appNumbersOnly 
@@ -23,6 +24,9 @@
     </div>
     <div class="alert alert-warning mt-2 py-2" role="alert" *ngIf="error && formSubmitted">
         There are no results for the Zipcode submitted
+    </div>
+    <div class="alert alert-warning mt-2 py-2" role="alert" *ngIf="errorAlreadyAdded && formSubmitted">
+        You have already submitted this Zipcode
     </div>
     <div class="alert alert-danger mt-2 py-2" role="alert" *ngIf="addLocation?.errors?.required && formSubmitted">
         Please fill in the Zipcode 

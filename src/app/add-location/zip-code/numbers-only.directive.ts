@@ -24,20 +24,19 @@ export class NumbersOnlyDirective {
   @HostListener('keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
     if (
-      // Allow: Delete, Backspace, Tab, Escape, Enter, etc
       this.navigationKeys.indexOf(e.key) > -1 || 
-      (e.key === 'a' && e.ctrlKey === true) || // Allow: Ctrl+A
-      (e.key === 'c' && e.ctrlKey === true) || // Allow: Ctrl+C
-      (e.key === 'v' && e.ctrlKey === true) || // Allow: Ctrl+V
-      (e.key === 'x' && e.ctrlKey === true) || // Allow: Ctrl+X
-      (e.key === 'a' && e.metaKey === true) || // Cmd+A (Mac)
-      (e.key === 'c' && e.metaKey === true) || // Cmd+C (Mac)
-      (e.key === 'v' && e.metaKey === true) || // Cmd+V (Mac)
-      (e.key === 'x' && e.metaKey === true) // Cmd+X (Mac)
+      (e.key === 'a' && e.ctrlKey === true) || 
+      (e.key === 'c' && e.ctrlKey === true) ||
+      (e.key === 'v' && e.ctrlKey === true) || 
+      (e.key === 'x' && e.ctrlKey === true) || 
+      (e.key === 'a' && e.metaKey === true) || 
+      (e.key === 'c' && e.metaKey === true) || 
+      (e.key === 'v' && e.metaKey === true) || 
+      (e.key === 'x' && e.metaKey === true) 
     ) {
-      return;  // let it happen, don't do anything
+      return;  
     }
-    // Ensure that it is a number and stop the keypress
+    
     if (e.key === ' ' || isNaN(Number(e.key))) {
       e.preventDefault();
     }
@@ -48,7 +47,7 @@ export class NumbersOnlyDirective {
     event.preventDefault();
     const pastedInput: string = event.clipboardData
       .getData('text/plain')
-      .replace(/\D/g, ''); // get a digit-only string
+      .replace(/\D/g, ''); 
     document.execCommand('insertText', false, pastedInput);
   }
 }

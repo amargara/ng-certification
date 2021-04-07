@@ -8,6 +8,7 @@ import { DataService } from '../shared/data.service';
   templateUrl: './add-location.component.html',
 })
 export class AddLocationComponent implements OnInit, OnDestroy {
+  
   zipCodes: Array<string>;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -17,15 +18,15 @@ export class AddLocationComponent implements OnInit, OnDestroy {
     this.getZipCodes();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
   getZipCodes(){
     this.dataService.zipCodes
     .pipe(takeUntil(this.destroy$))
     .subscribe(zipCodes => this.zipCodes = zipCodes);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
   }
 
 }

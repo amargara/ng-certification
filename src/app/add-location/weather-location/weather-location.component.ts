@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import * as EventEmitter from 'events';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BlockRouteService } from 'src/app/shared/block-route.service';
 import { DataService } from 'src/app/shared/data.service';
@@ -28,6 +27,11 @@ export class WeatherLocationComponent implements OnInit, OnDestroy {
     this.getWeatherByZipCode();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
   getWeatherByZipCode(){
     this.dataService.callWeatherByZipCode(this.zipCode)
     .pipe(takeUntil(this.destroy$))
@@ -47,11 +51,6 @@ export class WeatherLocationComponent implements OnInit, OnDestroy {
   goToForecast(){
     this.blockRouteService.allowingRoute(true);
     this.router.navigate(["/forecast", this.zipCode]);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
   }
 
 }

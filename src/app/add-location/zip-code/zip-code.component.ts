@@ -10,11 +10,15 @@ import { DataService } from '../../shared/data.service';
   styles: ['.btn{ min-width: fit-content;}']
 })
 export class ZipCodeComponent implements OnInit, OnDestroy {
+
   formSubmitted: boolean;
   zipCodes: Array<string>;
   form: NgForm;
   error: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  addLocation: string;
+  model: { addLocation:string } = { addLocation: '' };
+  errorAlreadyAdded: boolean;
 
   constructor(private readonly dataService: DataService) { }
 
@@ -22,11 +26,17 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     this.checkError();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
   onSubmit(form: NgForm){
+    debugger;
     this.form = form;
     this.formSubmitted = true;
     if (form.valid){
-      this.dataService.addZipCode(this.form.value.addLocation);
+      this.errorAlreadyAdded = this.dataService.addZipCode(this.model.addLocation);
     }
   }
 
@@ -39,16 +49,12 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     this.dataService.zipCodeError
     .pipe(takeUntil(this.destroy$))
     .subscribe((error:boolean) => {
+      debugger;
       this.error = error;
       if (this.error === false && this.form){
         this.form.resetForm();
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
   }
 
 }

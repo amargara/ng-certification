@@ -1,23 +1,25 @@
-<div class="container-fluid">
-    <div class="panel panel-default" *ngIf="data; else noResultsTemplate">
-      <div class="panel-heading">
-        <h3 class="panel-title">5-day forecast for {{cityName}}</h3>
-  
-      </div>
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor='let item of data'>
-          {{ item?.date | date:'EEEE, MMM d' }}
-          {{ item?.currentConditions | titlecase }}
-          - Min: {{ item?.minTemp | number : '1.0-0' }}
-          - Max: {{ item?.maxTemp | number : '1.0-0' }}
-          <app-weather-image [weather]="item?.currentConditions"></app-weather-image>
-        </li>
-      </ul>
-    </div>
+<div class="container-fluid" *ngIf="!loading">
+    <ng-container *ngIf="data; else noResultsTemplate">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">5-day forecast for {{cityName}}</h3>
+        
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor='let item of data'>
+                {{ item?.date | date:'EEEE, MMM d' }}
+                {{ item?.currentConditions | titlecase }}
+                - Min: {{ item?.minTemp | number : '1.0-0' }}
+                - Max: {{ item?.maxTemp | number : '1.0-0' }}
+                <app-weather-image [weather]="item?.currentConditions"></app-weather-image>
+              </li>
+            </ul>
+        </div>
+    </ng-container>
     <ng-template #noResultsTemplate>
         <div class="alert alert-warning mt-2 py-2" role="alert">
             There are no 5 Day Forecast results for the Zipcode chosen
         </div>
     </ng-template>
-    <button class="btn btn-success" tabindex="0" id="mainPageBtn" routerLink="/">&lt; Back to main page</button>
+    <button class="btn btn-success my-2" tabindex="0" id="mainPageBtn" routerLink="/">&lt; Back to main page</button>
   </div>
