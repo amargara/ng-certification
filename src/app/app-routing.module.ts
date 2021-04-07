@@ -1,16 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddLocationComponent } from './weather-forecast/add-location/add-location.component';
-import { FiveDayWeatherLocationComponent } from './weather-forecast/five-day-weather-location/five-day-weather-location.component';
-import { BlockRouteGuard } from './core/guards/block-route.guard';
 
 const routes: Routes = [
   {
-    path: 'forecast/:zipcode', 
-    component: FiveDayWeatherLocationComponent, 
-    canActivate:[BlockRouteGuard]
+    path: '',
+    loadChildren: () => import('./weather-forecast/weather-forecast.module').then(m => m.WeatherForecastModule)
   },
-  {path: '', component: AddLocationComponent},
   {path: '**', redirectTo: '/'}
 ];
 

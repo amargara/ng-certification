@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from '../../core/data.service';
 import { Weather } from '../../shared/weather-location.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-five-day-weather-location',
@@ -19,6 +20,7 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
   loading: boolean = true;
 
   constructor(
+    private location: Location,
     private route:ActivatedRoute,
     private readonly dataService: DataService) { }
 
@@ -36,16 +38,20 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
     this.dataService.callFiveDayForecast(this.zipCode)
     .pipe(takeUntil(this.destroy$))
     .subscribe(
-      (data) => {
-        this.cityName = data[0].name;
-        this.data = data;
-        this.loading = false;
-      }, 
-      () => {
-        this.noResults = true;
-        this.loading = false;
-      }
-    );
+      (data: Array<Weather>) => {
+        if (data.length > 0){
+          this.cityName = data[0].name;
+          this.data = data;
+          this.loading = false;
+        }else{
+          this.noResults = true;
+          this.loading = false;
+        }
+      });
+  }
+
+  goBack(){
+    this.location.back();
   }
 
 }

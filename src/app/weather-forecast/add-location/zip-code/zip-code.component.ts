@@ -42,6 +42,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   cleanErrorMessage(){
     this.formSubmitted = false;
     this.error = false;
+    this.errorAlreadyAdded = false;
   }
 
   checkError(){
@@ -49,9 +50,11 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe((error:boolean) => {
       this.error = error;
+
       if (this.error === false && this.form){
         this.form.resetForm();
       }
+      
     });
   }
 

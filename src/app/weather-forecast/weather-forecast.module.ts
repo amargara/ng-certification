@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { WeatherImageComponent } from './shared/weather-image/weather-image.component';
 import { FiveDayWeatherLocationComponent } from './five-day-weather-location/five-day-weather-location.component';
@@ -6,13 +5,15 @@ import { CurrentWeatherLocationComponent } from './add-location/current-weather-
 import { AddLocationComponent } from './add-location/add-location.component';
 import { ZipCodeComponent } from './add-location/zip-code/zip-code.component';
 import { FormsModule } from '@angular/forms';
-
+import { WeatherForecastRoutingModule } from './weather-forecast-routing.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports:      
   [ 
-    BrowserModule, 
-    FormsModule
+    FormsModule,
+    CommonModule,
+    WeatherForecastRoutingModule
   ],
   declarations: 
   [ 

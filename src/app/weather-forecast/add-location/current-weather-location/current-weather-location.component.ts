@@ -37,10 +37,13 @@ export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe(
       (data: Weather) => {
-        this.data = data;
-        this.dataService.zipError$.next(false);
-      }, 
-      () => this.dataService.removeZipCode(this.zipCode)
+        if (Object.keys(data).length > 0){
+          this.data = data;
+          this.dataService.zipError$.next(false);
+        }else{
+          this.dataService.removeZipCode(this.zipCode);
+        }
+      }
     );
   }
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Weather } from '../shared/weather-location.model';
 
 @Injectable({
@@ -57,7 +57,8 @@ export class DataService {
           maxTemp: data.main.temp_max
         };
         return weatherLocation;
-      }));
+      })
+      ,catchError(()=> of({})));
   }
 
   callFiveDayForecast(zipCode: string){
@@ -78,7 +79,8 @@ export class DataService {
           fiveDayForecast.push(weather);
         }
         return fiveDayForecast;
-      }));
+      })
+      ,catchError(()=> of([])));
     }
 
 }
