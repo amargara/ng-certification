@@ -24,7 +24,7 @@ export class AddLocationComponent implements OnInit, OnDestroy {
   }
 
   getZipCodes(){
-    this.dataService.zipCodes
+    this.dataService.zipCodes$
     .pipe(takeUntil(this.destroy$))
     .subscribe(zipCodes => this.zipCodes = zipCodes);
   }

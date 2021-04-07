@@ -45,7 +45,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   }
 
   checkError(){
-    this.dataService.zipCodeError
+    this.dataService.zipCodeError$
     .pipe(takeUntil(this.destroy$))
     .subscribe((error:boolean) => {
       this.error = error;

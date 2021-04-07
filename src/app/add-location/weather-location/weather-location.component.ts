@@ -38,7 +38,7 @@ export class WeatherLocationComponent implements OnInit, OnDestroy {
     .subscribe(
       (data: Weather) => {
         this.data = data;
-        this.dataService.zipError.next(false);
+        this.dataService.zipError$.next(false);
       }, 
       () => this.dataService.removeZipCode(this.zipCode)
     );

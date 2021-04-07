@@ -10,10 +10,10 @@ import { Weather } from './weather-location.model';
 
 export class DataService {
 
-  private zipArray: BehaviorSubject<Array<string>> = new BehaviorSubject<Array<string>>([]);    
-  public zipCodes: Observable<Array<string>> = this.zipArray.asObservable();  
-  public zipError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);    
-  public zipCodeError: Observable<boolean> = this.zipError.asObservable();   
+  private zipArray$: BehaviorSubject<Array<string>> = new BehaviorSubject<Array<string>>([]);    
+  public zipCodes$: Observable<Array<string>> = this.zipArray$.asObservable();  
+  public zipError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);    
+  public zipCodeError$: Observable<boolean> = this.zipError$.asObservable();   
   private zipCodesArray: Array<string>;
 
   constructor(private readonly http: HttpClient) { }
@@ -21,14 +21,14 @@ export class DataService {
   checkLocalZipCodes(){
     const localZipCodes: string = localStorage.getItem('zipCodes');
     this.zipCodesArray =  localZipCodes ? localZipCodes.split(",") : [];
-    this.zipArray.next(this.zipCodesArray);
+    this.zipArray$.next(this.zipCodesArray);
   }
 
   addZipCode(value: string){
     if (this.zipCodesArray.indexOf(value) < 0){
       this.zipCodesArray.push(value);
       localStorage.setItem('zipCodes',this.zipCodesArray.toString());
-      this.zipArray.next(this.zipCodesArray);
+      this.zipArray$.next(this.zipCodesArray);
       return false;
     }else{
       return true;
@@ -40,8 +40,8 @@ export class DataService {
     if (index > -1){
       this.zipCodesArray.splice(index, 1);
       localStorage.setItem('zipCodes',this.zipCodesArray.toString());
-      this.zipArray.next(this.zipCodesArray);
-      this.zipError.next(true);
+      this.zipArray$.next(this.zipCodesArray);
+      this.zipError$.next(true);
     }
   }
 
