@@ -10,11 +10,11 @@
             - Min {{ data?.minTemp | number : '1.0-0'}}
           </p>
           <p>
-            <a [routerLink]="['/forecast', zipCode]">Show 5-day forecast for {{ data?.name }}</a>
+            <a class="link" (click)="goToForecast()">Show 5-day forecast for {{ data?.name }}</a>
           </p>
         </div>
         <div>
-          <span class="close" (click)="removeItem()">×</span>
+          <span class="close link" (click)="removeItem()">×</span>
           <app-weather-image [weather]="data?.currentConditions"></app-weather-image>
         </div>
      </div>

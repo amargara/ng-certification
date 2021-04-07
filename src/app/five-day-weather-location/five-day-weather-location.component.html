@@ -1,5 +1,5 @@
-<div class="container-fluid" *ngIf="data">
-    <div class="panel panel-default">
+<div class="container-fluid">
+    <div class="panel panel-default" *ngIf="data; else noResultsTemplate">
       <div class="panel-heading">
         <h3 class="panel-title">5-day forecast for {{cityName}}</h3>
   
@@ -14,5 +14,10 @@
         </li>
       </ul>
     </div>
+    <ng-template #noResultsTemplate>
+        <div class="alert alert-warning mt-2 py-2" role="alert">
+            There are no 5 Day Forecast results for the Zipcode chosen
+        </div>
+    </ng-template>
     <button class="btn btn-success" tabindex="0" id="mainPageBtn" routerLink="/">&lt; Back to main page</button>
   </div>

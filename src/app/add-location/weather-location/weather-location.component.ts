@@ -1,13 +1,16 @@
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import * as EventEmitter from 'events';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { BlockRouteService } from 'src/app/shared/block-route.service';
 import { DataService } from 'src/app/shared/data.service';
 import { Weather } from '../../shared/weather-location.model';
 
 @Component({
   selector: 'app-weather-location',
   templateUrl: './weather-location.component.html',
+  styles: ['.link{ cursor: pointer; }']
 })
 export class WeatherLocationComponent implements OnInit, OnDestroy {
 
@@ -15,7 +18,11 @@ export class WeatherLocationComponent implements OnInit, OnDestroy {
   data:Weather;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private readonly dataService: DataService) { }
+  constructor(
+    private readonly dataService: DataService,
+    private readonly router: Router,
+    private readonly blockRouteService: BlockRouteService
+    ) { }
 
   ngOnInit(): void {
     this.getWeatherByZipCode();
@@ -35,6 +42,11 @@ export class WeatherLocationComponent implements OnInit, OnDestroy {
 
   removeItem(){
     this.dataService.removeZipCode(this.zipCode);
+  }
+
+  goToForecast(){
+    this.blockRouteService.allowingRoute(true);
+    this.router.navigate(["/forecast", this.zipCode]);
   }
 
   ngOnDestroy() {

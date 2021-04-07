@@ -13,6 +13,7 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
   zipCode: string;
   cityName: string;
   data: Array<Weather>;
+  noResults: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -32,7 +33,7 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
         this.cityName = data[0].name;
         this.data = data;
       }, 
-      () => this.dataService.removeZipCode(this.zipCode)
+      () => this.noResults = true
     );
   }
 
