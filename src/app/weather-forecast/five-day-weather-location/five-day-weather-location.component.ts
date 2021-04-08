@@ -17,24 +17,24 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
   data: Array<Weather>;
   noResults: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  loading: boolean = true;
+  loading = true;
 
   constructor(
     private location: Location,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private readonly dataService: DataService) { }
 
   ngOnInit(): void {
-    this.zipCode = this.route.snapshot.params['zipcode'];
+    this.zipCode = this.route.snapshot.params.zipcode;
     this.getForecastByZipCode();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
 
-  getForecastByZipCode(){
+  private getForecastByZipCode(): void {
     this.dataService.callFiveDayForecast(this.zipCode)
     .pipe(takeUntil(this.destroy$))
     .subscribe(
@@ -50,7 +50,7 @@ export class FiveDayWeatherLocationComponent implements OnInit, OnDestroy {
       });
   }
 
-  goBack(){
+  public goBack(): void {
     this.location.back();
   }
 

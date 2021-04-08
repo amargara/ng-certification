@@ -11,7 +11,7 @@
                 {{ item?.currentConditions | titlecase }}
                 - Min: {{ item?.minTemp | number : '1.0-0' }}
                 - Max: {{ item?.maxTemp | number : '1.0-0' }}
-                <app-weather-image [weather]="item?.currentConditions"></app-weather-image>
+              <img class="icon" [alt]="item?.currentConditions" [src]="item?.imgSrc">
               </li>
             </ul>
         </div>

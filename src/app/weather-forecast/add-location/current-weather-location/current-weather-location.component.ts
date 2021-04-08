@@ -14,7 +14,7 @@ import { BlockRouteGuard } from 'src/app/core/guards/block-route.guard';
 export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
 
   @Input() zipCode: string;
-  data:Weather;
+  data: Weather;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -27,12 +27,12 @@ export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
     this.getWeatherByZipCode();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
 
-  getWeatherByZipCode(){
+  private getWeatherByZipCode(): void {
     this.dataService.callWeatherByZipCode(this.zipCode)
     .pipe(takeUntil(this.destroy$))
     .subscribe(
@@ -41,19 +41,19 @@ export class CurrentWeatherLocationComponent implements OnInit, OnDestroy {
           this.data = data;
           this.dataService.zipError$.next(false);
         }else{
-          this.dataService.removeZipCode(this.zipCode);
+          this.dataService.removeZipCode(this.zipCode, false);
         }
       }
     );
   }
 
-  removeItem(){
-    this.dataService.removeZipCode(this.zipCode);
+  public removeItem(): void {
+    this.dataService.removeZipCode(this.zipCode, true);
   }
 
-  goToForecast(){
-    this.blockRouteGuard.allowingRoute(true);
-    this.router.navigate(["/forecast", this.zipCode]);
+  public goToForecast(): void {
+    this.blockRouteGuard.canGoToRoute(true);
+    this.router.navigate(['/forecast', this.zipCode]);
   }
 
 }

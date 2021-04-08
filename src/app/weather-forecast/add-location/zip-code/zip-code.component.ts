@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from '../../../core/data.service';
@@ -13,12 +13,20 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
 
   formSubmitted: boolean;
   zipCodes: Array<string>;
-  form: NgForm;
   error: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
   addLocation: string;
-  model: { addLocation:string } = { addLocation: '' };
   errorAlreadyAdded: boolean;
+  zipCodeForm: FormGroup = new FormGroup({
+  zipCode: new FormControl(
+    '', 
+    Validators.compose([
+      Validators.required, 
+      Validators.maxLength(5), 
+      Validators.minLength(5),
+      Validators.pattern('^[0-9]*$')
+    ])),
+  });
 
   constructor(private readonly dataService: DataService) { }
 
@@ -26,35 +34,33 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     this.checkError();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
 
-  onSubmit(form: NgForm){
-    this.form = form;
+  public onSubmit(): void {
     this.formSubmitted = true;
-    if (form.valid){
-      this.errorAlreadyAdded = this.dataService.addZipCode(this.model.addLocation);
+    if (this.zipCodeForm.valid){
+      this.errorAlreadyAdded = this.dataService.addZipCode(this.zipCodeForm.value.zipCode);
     }
   }
 
-  cleanErrorMessage(){
+  public cleanErrorMessage(): void {
     this.formSubmitted = false;
     this.error = false;
     this.errorAlreadyAdded = false;
   }
 
-  checkError(){
+  private checkError(): void {
     this.dataService.zipCodeError$
     .pipe(takeUntil(this.destroy$))
-    .subscribe((error:boolean) => {
+    .subscribe((error: boolean) => {
       this.error = error;
-
-      if (this.error === false && this.form){
-        this.form.resetForm();
+      if (this.error === false){
+        this.zipCodeForm.reset();
+        this.cleanErrorMessage();
       }
-      
     });
   }
 

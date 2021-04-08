@@ -5,4 +5,5 @@ export interface Weather {
     maxTemp: number;
     minTemp: number;
     date?: Date;
+    imgSrc: string;
 }

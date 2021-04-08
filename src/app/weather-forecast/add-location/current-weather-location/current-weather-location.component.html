@@ -15,7 +15,7 @@
         </div>
         <div>
           <span class="close link" (click)="removeItem()">×</span>
-          <app-weather-image [weather]="data?.currentConditions"></app-weather-image>
+          <img [alt]="data?.currentConditions" [src]="data?.imgSrc">
         </div>
      </div>
 </div>

@@ -13,20 +13,19 @@ export class BlockRouteGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot): boolean | UrlTree {
     return this.blockRoutes();
   }
 
-  allowingRoute(allowRoute) {
+  public canGoToRoute(allowRoute): void {
     this.allowRoute = allowRoute;
   }
 
-  blockRoutes(): boolean {
+  private blockRoutes(): boolean | UrlTree {
     if (this.allowRoute) {
       return true;
     } else {
-      this.router.navigate(["/"]);
-      return false;
+      return this.router.createUrlTree(['/']);
     }
   }
   

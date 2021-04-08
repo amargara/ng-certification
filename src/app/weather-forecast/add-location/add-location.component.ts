@@ -1,32 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DataService } from '../../core/data.service';
 
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
 })
-export class AddLocationComponent implements OnInit, OnDestroy {
+export class AddLocationComponent implements OnInit {
   
-  zipCodes: Array<string>;
-  destroy$: Subject<boolean> = new Subject<boolean>();
+  zipCodes$: Observable<Array<string>>;
 
   constructor(private readonly dataService: DataService) { }
 
   ngOnInit(): void {
-    this.getZipCodes();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-
-  getZipCodes(){
-    this.dataService.zipCodes$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(zipCodes => this.zipCodes = zipCodes);
+    this.zipCodes$ = this.dataService.zipCodes$;
   }
 
 }

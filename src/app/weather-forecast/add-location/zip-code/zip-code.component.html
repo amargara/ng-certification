@@ -1,34 +1,40 @@
 <div class="well">
     <h2>Enter a zipcode:</h2>
-    <form class="d-flex" #zipCodeForm="ngForm" (submit)="onSubmit(zipCodeForm)">
-        <input 
-        class="form-control" 
-        placeholder="Zipcode" 
-        type="text" 
-        minlength="5"
-        maxlength="5"
-        name="addLocation"
-        #addLocation="ngModel"
-        ngModel 
-        [(ngModel)]="model.addLocation"
-        (ngModelChange)="cleanErrorMessage()"
-        required 
-        appNumbersOnly 
-        >
-        <button class="btn btn-primary ml-2"  type="submit" id="addLocationBtn">
-          Add location
-        </button>
+    <form [formGroup]="zipCodeForm" (ngSubmit)="onSubmit()">
+        <div class="d-flex w-100">
+            <input 
+            class="form-control" 
+            placeholder="Zipcode" 
+            type="text" 
+            maxLength="5"
+            (input)="cleanErrorMessage()"
+            formControlName="zipCode"
+            >
+            <button class="btn btn-primary ml-2"  type="submit" id="addLocationBtn">
+              Add location
+            </button>
+        </div>
+
+        <div class="alert alert-danger my-2 py-2" role="alert" 
+        *ngIf="zipCodeForm.controls.zipCode?.errors?.required && formSubmitted">
+            Please fill in the Zipcode 
+        </div>
+        <div class="alert alert-warning my-2 py-2" role="alert" 
+        *ngIf="zipCodeForm.controls.zipCode?.errors?.pattern && formSubmitted">
+            Zipcode should only have numbers!
+        </div>
+        <div class="alert alert-warning my-2 py-2" role="alert" 
+        *ngIf="zipCodeForm.controls.zipCode?.errors?.minlength && formSubmitted">
+            Zipcode should have at least 5 digits
+        </div>
+        <div class="alert alert-warning my-2 py-2" role="alert" 
+        *ngIf="error && formSubmitted">
+            There are no results for the Zipcode submitted
+        </div>
+        <div class="alert alert-warning my-2 py-2" role="alert"
+        *ngIf="errorAlreadyAdded && formSubmitted">
+            You have already submitted this Zipcode
+        </div>
+
     </form>
-    <div class="alert alert-warning mt-2 py-2" role="alert" *ngIf="addLocation?.errors?.minlength && formSubmitted">
-        Zipcode should have at least 5 digits
-    </div>
-    <div class="alert alert-warning mt-2 py-2" role="alert" *ngIf="error && formSubmitted">
-        There are no results for the Zipcode submitted
-    </div>
-    <div class="alert alert-warning mt-2 py-2" role="alert" *ngIf="errorAlreadyAdded && formSubmitted">
-        You have already submitted this Zipcode
-    </div>
-    <div class="alert alert-danger mt-2 py-2" role="alert" *ngIf="addLocation?.errors?.required && formSubmitted">
-        Please fill in the Zipcode 
-    </div>
 </div>
